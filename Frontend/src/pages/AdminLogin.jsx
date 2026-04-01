@@ -85,7 +85,7 @@ export default function AdminLogin() {
               <label style={{ display: "block", marginBottom: "8px", fontSize: "14px", fontWeight: "bold", color: "#c9d1d9" }}>ADMIN EMAIL</label>
               <input
                 type="email"
-                placeholder="admin@admin.com"
+                placeholder="Admin Email"
                 required
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 style={{
@@ -101,7 +101,7 @@ export default function AdminLogin() {
               <label style={{ display: "block", marginBottom: "8px", fontSize: "14px", fontWeight: "bold", color: "#c9d1d9" }}>PASSWORD</label>
               <input
                 type="password"
-                placeholder="Enter admin password (12082004)"
+                placeholder="Admin Password"
                 required
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 style={{
