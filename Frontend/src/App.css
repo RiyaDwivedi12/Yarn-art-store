@@ -1,0 +1,662 @@
+/* =========================================
+   GLOBAL RESPONSIVE SYSTEM + SAFARI/iOS/ANDROID COMPATIBILITY
+   ========================================= */
+
+/* Universal box-sizing reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* Remove blue tap highlight on Android/iOS */
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  /* Safari iOS 100vh fix — uses -webkit-fill-available as fallback */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  /* Smooth scrolling for all browsers */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent text size adjustment on orientation change (Safari/Android) */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent iOS input zoom (font-size must be >= 16px) */
+input, select, textarea {
+  font-size: 16px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0; /* Reset Safari default rounded inputs */
+}
+
+/* Restore border-radius after resetting Safari defaults */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+  border-radius: 8px;
+}
+
+/* Safari smooth scrolling for overflow containers */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* Grids */
+.product-grid {
+  display: grid;
+  display: -ms-grid; /* IE fallback */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Safari gap fallback — uses margin when gap is unsupported */
+@supports not (gap: 20px) {
+  .product-grid > * {
+    margin: 10px;
+  }
+}
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+}
+
+/* Page Containers */
+.main-flex-container {
+  max-width: 1450px; 
+  margin: 0 auto; 
+  display: flex;
+  display: -webkit-flex; /* Safari < 9 */
+  gap: 35px; 
+  padding: 0 25px 50px;
+}
+
+/* Safari flex gap fallback */
+@supports not (gap: 35px) {
+  .main-flex-container > * {
+    margin-right: 35px;
+  }
+  .main-flex-container > *:last-child {
+    margin-right: 0;
+  }
+}
+
+/* Sidebar Wrapper */
+.sidebar-wrapper {
+  width: 230px;
+  flex-shrink: 0;
+  -webkit-flex-shrink: 0;
+}
+
+/* Hero Banner */
+.hero-banner {
+  max-width: 1450px;
+  margin: 25px auto 40px;
+  background: linear-gradient(135deg, #f43397, #ff527b);
+  background: -webkit-linear-gradient(135deg, #f43397, #ff527b); /* Safari */
+  color: white;
+  border-radius: 16px;
+  padding: 50px;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items: center;
+  box-shadow: 0 10px 30px rgba(244,51,151,0.25);
+  -webkit-box-shadow: 0 10px 30px rgba(244,51,151,0.25);
+  box-sizing: border-box;
+}
+
+.hero-banner h1 {
+  font-size: 3.5rem !important;
+  margin: 0 0 10px !important;
+  letter-spacing: -1px;
+}
+
+.hero-banner h2 {
+  font-size: 1.6rem !important;
+  margin: 0 0 25px !important;
+  font-weight: 500 !important;
+  opacity: 0.95;
+}
+
+.hero-badges {
+  margin-top: 10px;
+}
+
+/* Product Card Sizing Constraint */
+.product-grid > div {
+  width: 100%;
+}
+
+/* =========================================
+   MOBILE NAVBAR HAMBURGER SYSTEM
+   ========================================= */
+   
+.navbar-container {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  padding: 12px 25px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  position: sticky;
+  position: -webkit-sticky; /* Safari sticky fix */
+  top: 0;
+  z-index: 1000;
+  /* Safe area for notched iPhones */
+  padding-left: max(25px, env(safe-area-inset-left));
+  padding-right: max(25px, env(safe-area-inset-right));
+}
+
+.navbar-logo-links {
+  display: flex;
+  display: -webkit-flex;
+  align-items: baseline;
+  -webkit-align-items: baseline;
+  gap: 30px;
+}
+
+.navbar-search-wrapper {
+  position: relative;
+  width: 50%;
+}
+
+.navbar-right-icons {
+  display: flex;
+  display: -webkit-flex;
+  gap: 25px;
+  font-size: 20px;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.navbar-nav-link {
+  cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: color 0.2s;
+  -webkit-transition: color 0.2s;
+}
+
+.navbar-nav-link:hover,
+.navbar-nav-link:active {
+  color: #ff3f6c;
+}
+
+/* Hamburger Button - hidden by default on desktop */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 8px;
+  color: #333;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 1100;
+}
+
+/* Mobile Navigation Overlay */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+}
+
+.mobile-nav-overlay.active {
+  opacity: 1;
+}
+
+.mobile-nav-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  max-width: 80vw;
+  height: 100%;
+  height: -webkit-fill-available;
+  background: #fff;
+  z-index: 1060;
+  padding: 20px;
+  padding-top: max(20px, env(safe-area-inset-top));
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  transition: right 0.3s ease;
+  -webkit-transition: right 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+}
+
+.mobile-nav-menu.open {
+  right: 0;
+}
+
+.mobile-nav-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  float: right;
+  padding: 5px 10px;
+  color: #333;
+}
+
+.mobile-nav-item {
+  display: block;
+  padding: 15px 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  -webkit-transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-item:active {
+  background: #FDE9F2;
+  color: #f43397;
+}
+
+/* =========================================
+   ADMIN DASHBOARD MOBILE RESPONSIVE SYSTEM
+   ========================================= */
+
+.admin-layout {
+  display: flex;
+  display: -webkit-flex;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  font-family: 'Inter', sans-serif;
+  background: #f3f4f6;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background: #0d1117;
+  color: white;
+  padding: 20px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  height: 100vh;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+  -webkit-transition: transform 0.3s ease;
+  z-index: 1100;
+}
+
+.admin-sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1050;
+}
+
+.admin-mobile-header {
+  display: none;
+  padding: 15px 20px;
+  background: #0d1117;
+  color: white;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.admin-mobile-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.admin-content {
+  flex: 1;
+  -webkit-flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Admin table responsive wrapper */
+.admin-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+.admin-table-wrapper table {
+  min-width: 600px;
+}
+
+/* =========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================= */
+   
+/* Large tablets and small desktops */
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablets */
+@media (max-width: 950px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .split-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .sidebar-wrapper > div {
+    position: static !important; /* disable sticky on mobile */
+  }
+
+  /* Responsive Hero Text */
+  .hero-banner {
+    flex-direction: column !important;
+    -webkit-flex-direction: column !important;
+    text-align: center !important;
+    padding: 35px 20px !important;
+    margin: 20px !important;
+  }
+  .hero-banner h1 { font-size: 2.5rem !important; }
+  .hero-banner h2 { font-size: 1.2rem !important; }
+  .hero-banner .hero-badges { justify-content: center; -webkit-justify-content: center; }
+  
+  /* Flex alignments */
+  .main-flex-container {
+    flex-direction: column;
+    -webkit-flex-direction: column;
+  }
+}
+
+/* Mobile breakpoint — Activate hamburger, collapse admin sidebar */
+@media (max-width: 768px) {
+  /* NAVBAR: Show hamburger, hide desktop nav links */
+  .hamburger-btn {
+    display: block;
+  }
+  
+  .mobile-nav-overlay {
+    display: block;
+  }
+  
+  .navbar-nav-link {
+    display: none !important; /* Hide desktop nav text links */
+  }
+  
+  .navbar-search-wrapper {
+    width: 45%;
+  }
+  
+  .navbar-right-icons {
+    gap: 18px;
+    font-size: 18px;
+  }
+
+  .navbar-container {
+    padding: 10px 15px;
+    padding-left: max(15px, env(safe-area-inset-left));
+    padding-right: max(15px, env(safe-area-inset-right));
+  }
+  
+  /* ADMIN DASHBOARD: Slide-out sidebar */
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+  
+  .admin-sidebar.open {
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+  }
+  
+  .admin-sidebar-overlay.active {
+    display: block;
+  }
+  
+  .admin-mobile-header {
+    display: flex;
+    display: -webkit-flex;
+  }
+  
+  .admin-content {
+    padding: 20px 15px;
+  }
+
+  /* Profile page adjustments */
+  .profile-sidebar {
+    max-width: 100% !important;
+  }
+}
+
+/* Small phones */
+@media (max-width: 500px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .navbar-search-wrapper {
+    width: 40%;
+  }
+  
+  .hero-banner h1 { font-size: 1.8rem !important; }
+  .hero-banner h2 { font-size: 1rem !important; }
+  
+  .hero-banner {
+    padding: 25px 15px !important;
+    margin: 15px 10px !important;
+  }
+}
+
+/* =========================================
+   SAFARI-SPECIFIC FIXES
+   ========================================= */
+
+/* Fix for Safari flexbox height issues */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific */
+  body {
+    /* Use -webkit-fill-available for proper 100vh on iOS Safari */
+    min-height: -webkit-fill-available;
+  }
+  
+  /* Fix Safari flex items not wrapping properly */
+  .main-flex-container {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+}
+
+/* Fix Safari sticky positioning needing explicit parent overflow */
+.admin-sidebar,
+.sidebar-wrapper > div {
+  -webkit-position: sticky;
+}
+
+/* =========================================
+   KEYFRAME ANIMATIONS (Safari-compatible)
+   ========================================= */
+@-webkit-keyframes slideUp {
+  from { -webkit-transform: translateY(100px); opacity: 0; }
+  to { -webkit-transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@-webkit-keyframes popIn {
+  from { -webkit-transform: scale(0.9); opacity: 0; }
+  to { -webkit-transform: scale(1); opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================
+   SAFE AREA INSETS (iPhone X+ notch support)
+   ========================================= */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Bottom padding for pages to avoid bottom bar overlap on iOS */
+  .page-content-wrapper {
+    padding-bottom: max(50px, env(safe-area-inset-bottom));
+  }
+}
+
+/* =========================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ========================================= */
+@media (hover: none) and (pointer: coarse) {
+  /* Ensure minimum touch target sizes on touch devices (44x44 per Apple HIG) */
+  button, 
+  [role="button"],
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Disable hover effects on touch — they cause sticky states on mobile Safari */
+  .product-grid > div:hover {
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+}
+
+/* =========================================
+   GLOBAL TOAST SYSTEM (Bottom Right)
+   ========================================= */
+
+.global-toast-container {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.global-toast {
+  pointer-events: auto;
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-left: 5px solid #ccc;
+  overflow: hidden;
+  position: relative;
+}
+
+.global-toast.success {
+  border-left-color: #238636;
+  background: #f0fff4;
+}
+
+.global-toast.error {
+  border-left-color: #f85149;
+  background: #fff5f5;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.toast-icon {
+  font-size: 22px;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .global-toast-container {
+    right: 15px;
+    left: 15px;
+    bottom: 20px;
+    max-width: none;
+  }
+  .global-toast {
+    min-width: 0;
+    width: 100%;
+  }
+}
