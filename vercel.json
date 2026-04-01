@@ -8,7 +8,9 @@
     {
       "src": "Frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+      "config": {
+        "distDir": "build"
+      }
     }
   ],
   "rewrites": [
@@ -18,7 +20,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/Frontend/index.html"
+      "destination": "/index.html"
     }
   ]
 }
