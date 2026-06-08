@@ -168,9 +168,9 @@ function Checkout() {
     <div style={{ background: "#f9f9f9", minHeight: "100vh", fontFamily: "'Inter', sans-serif" }}>
       <Navbar />
       
-      <div style={{ maxWidth: "1000px", margin: "40px auto", display: "flex", gap: "30px", flexWrap: "wrap", padding: "0 20px" }}>
+      <div className="responsive-flex-row" style={{ maxWidth: "1000px", margin: "40px auto", display: "flex", gap: "30px", flexWrap: "wrap", padding: "0 20px" }}>
         
-        <div style={{ flex: "1 1 500px", background: "#fff", padding: "30px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
+        <div className="checkout-left" style={{ flex: "1 1 100%", minWidth: "280px", background: "#fff", padding: "30px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
           <h2 style={{ marginBottom: "5px", color: "#333" }}>Delivery Details</h2>
           <p style={{ color: "#777", marginBottom: "20px" }}>Where should we send your yarn art?</p>
 
@@ -232,7 +232,7 @@ function Checkout() {
           </form>
         </div>
 
-        <div style={{ flex: "1 1 300px", background: "#fff", padding: "30px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", height: "fit-content" }}>
+        <div className="checkout-right" style={{ flex: "1 1 300px", minWidth: "280px", background: "#fff", padding: "30px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", height: "fit-content" }}>
           <h3 style={{ borderBottom: "1px solid #eee", paddingBottom: "10px", marginBottom: "15px" }}>Order Summary</h3>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", color: "#555" }}>
             <span>Items ({totalItems}):</span>

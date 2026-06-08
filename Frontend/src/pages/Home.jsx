@@ -59,11 +59,11 @@ function Home() {
         
         {/* LEFT FILTER SIDEBAR */}
         <div className="sidebar-wrapper">
-          <div style={{ background: "white", borderRadius: "12px", padding: "15px", border: "1px solid #f0f0f0", position: "sticky", top: "90px", boxShadow: "0 2px 10px rgba(0,0,0,0.03)" }}>
-            <h3 style={{ margin: "0 0 15px", borderBottom: "1px solid #f0f0f0", paddingBottom: "10px", fontSize: "16px", color: "#333", textTransform: "uppercase" }}>Categories</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+          <div className="sidebar-inner" style={{ position: "sticky", top: "90px" }}>
+            <h3>Categories</h3>
+            <div className="category-list">
               {categories.map((cat) => (
-                <p
+                <div
                   key={cat.name}
                   onClick={() => {
                     if (cat.name === "All") {
@@ -72,33 +72,11 @@ function Home() {
                       setSearchParams({ category: cat.name });
                     }
                   }}
-                  style={{
-                    cursor: "pointer",
-                    padding: "10px 12px",
-                    margin: "0",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    background: selectedCategory === cat.name ? "#FDE9F2" : "transparent",
-                    color: selectedCategory === cat.name ? "#f43397" : "#555",
-                    fontWeight: selectedCategory === cat.name ? "bold" : "500",
-                    transition: "all 0.2s"
-                  }}
-                  onMouseOver={(e) => {
-                    if (selectedCategory !== cat.name) {
-                      e.target.style.background = "#fafafa";
-                      e.target.style.color = "#333";
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    if (selectedCategory !== cat.name) {
-                      e.target.style.background = "transparent";
-                      e.target.style.color = "#555";
-                    }
-                  }}
+                  className={`category-item ${selectedCategory === cat.name ? 'active' : ''}`}
                 >
-                  <span style={{marginRight: "8px", fontSize: "16px"}}>{cat.icon}</span> 
-                  {cat.name}
-                </p>
+                  <div className="category-icon">{cat.icon}</div> 
+                  <span className="category-name">{cat.name}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -115,53 +93,27 @@ function Home() {
                 <div
                   key={p._id}
                   onClick={() => navigate(`/product/${p._id}`)}
-                  style={{
-                    border: "1px solid #eaeaec",
-                    borderRadius: "8px",
-                    padding: "15px",
-                    background: "#fff",
-                    cursor: "pointer",
-                    transition: "box-shadow 0.2s, transform 0.2s",
-                    WebkitTransition: "box-shadow 0.2s, transform 0.2s",
-                    display: "flex",
-                    flexDirection: "column"
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.boxShadow = "none";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
+                  className="product-card"
                 >
                   <div style={{ position: "relative" }}>
                     <img
                       src={p.image?.startsWith("http") ? p.image : `${BASE_URL}${p.image}`}
                       alt={p.name}
-                      style={{
-                        width: "100%",
-                        height: "220px",
-                        objectFit: "contain",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9",
-                        padding: "10px",
-                        boxSizing: "border-box",
-                      }}
+                      className="product-image"
                     />
                   </div>
 
-                  <h4 style={{ margin: "15px 0 5px", fontSize: "16px", color: "#555", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <h4 className="product-title">
                     {p.name}
                   </h4>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", margin: "5px 0" }}>
-                    <span style={{ fontWeight: "bold", fontSize: "22px", color: "#333" }}>₹{p.price}</span>
-                    <span style={{ textDecoration: "line-through", color: "#999", fontSize: "14px" }}>₹{originalPrice}</span>
-                    <span style={{ color: "#038d63", fontWeight: "bold", fontSize: "14px" }}>28% off</span>
+                  <div className="product-price-row">
+                    <span className="product-price">₹{p.price}</span>
+                    <span className="product-original-price">₹{originalPrice}</span>
+                    <span className="product-discount">28% off</span>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", margin: "5px 0 10px" }}>
+                  <div className="product-rating-row">
                     <span style={{ background: "#23bb75", color: "white", padding: "3px 8px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold", display: "flex", alignItems: "center", gap: "4px" }}>
                       4.2 ⭐
                     </span>
@@ -169,11 +121,7 @@ function Home() {
                   </div>
 
                   <div style={{ marginTop: "auto" }}>
-                    <span style={{ 
-                      background: "#f4f4f4", color: "#333", fontSize: "12px", 
-                      padding: "4px 8px", borderRadius: "15px", display: "inline-block",
-                      marginBottom: "10px", fontWeight: "bold"
-                    }}>
+                    <span className="product-delivery-badge">
                       🚚 Free Delivery
                     </span>
                   </div>

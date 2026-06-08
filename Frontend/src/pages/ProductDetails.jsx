@@ -80,9 +80,10 @@ function ProductDetails() {
           
           {/* ======== LEFT: IMAGE ======== */}
           <div style={{ 
-            flex: "1 1 400px", 
+            flex: "1 1 300px", 
+            minWidth: "280px",
             background: "#fff", 
-            padding: "30px", 
+            padding: "20px", 
             borderRadius: "12px", 
             boxShadow: "0 4px 15px rgba(0,0,0,0.05)",
             border: "1px solid #f0f0f0",
@@ -97,7 +98,7 @@ function ProductDetails() {
                   alt={product.name}
                   style={{
                     width: "100%",
-                    height: "400px",
+                    height: "clamp(250px, 40vw, 400px)",
                     objectFit: "contain",
                     borderRadius: "8px",
                     backgroundColor: "#f9f9f9",
@@ -238,50 +239,25 @@ function ProductDetails() {
                   <div
                     key={p._id || p.id}
                     onClick={() => navigate(`/product/${p._id || p.id}`)}
-                    style={{
-                      border: "1px solid #eaeaec",
-                      borderRadius: "8px",
-                      padding: "15px",
-                      background: "#fff",
-                      cursor: "pointer",
-                      transition: "box-shadow 0.2s, transform 0.2s",
-                    WebkitTransition: "box-shadow 0.2s, transform 0.2s",
-                      display: "flex",
-                      flexDirection: "column"
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.boxShadow = "none";
-                      e.currentTarget.style.transform = "translateY(0)";
-                    }}
+                    className="product-card"
                   >
                     <div style={{ position: "relative" }}>
                       <img
                         src={p.image?.startsWith("http") ? p.image : `${BASE_URL}${p.image}`}
                         alt={p.name}
-                        style={{
-                          width: "100%",
-                          height: "180px",
-                          objectFit: "contain",
-                          borderRadius: "8px",
-                          backgroundColor: "#f9f9f9",
-                          padding: "10px",
-                        }}
+                        className="product-image"
                       />
                     </div>
-                    <h4 style={{ margin: "15px 0 5px", fontSize: "15px", color: "#555", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <h4 className="product-title">
                       {p.name}
                     </h4>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", margin: "5px 0" }}>
-                      <span style={{ fontWeight: "bold", fontSize: "20px", color: "#333" }}>₹{p.price}</span>
-                      <span style={{ textDecoration: "line-through", color: "#999", fontSize: "13px" }}>₹{rpOrPrice}</span>
-                      <span style={{ color: "#038d63", fontWeight: "bold", fontSize: "13px" }}>28% off</span>
+                    <div className="product-price-row">
+                      <span className="product-price">₹{p.price}</span>
+                      <span className="product-original-price">₹{rpOrPrice}</span>
+                      <span className="product-discount">28% off</span>
                     </div>
                     <div style={{ marginTop: "auto", paddingTop: "10px" }}>
-                      <span style={{ background: "#f4f4f4", color: "#333", fontSize: "11px", padding: "4px 8px", borderRadius: "15px", display: "inline-block", fontWeight: "bold" }}>
+                      <span className="product-delivery-badge">
                         🚚 Free Delivery
                       </span>
                     </div>

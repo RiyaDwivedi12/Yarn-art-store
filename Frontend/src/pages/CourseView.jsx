@@ -243,7 +243,7 @@ export default function CourseView() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 350px", gap: "40px", alignItems: "start" }}>
+        <div className="course-view-grid" style={{ display: "grid", gap: "40px", alignItems: "start" }}>
           <div style={{ background: "white", borderRadius: "24px", padding: "30px", boxShadow: "0 10px 30px rgba(0,0,0,0.05)" }}>
             <h3 style={{ margin: "0 0 25px", fontSize: "22px", fontWeight: "700", display: "flex", alignItems: "center", gap: "10px" }}>Discussion ({comments.length})</h3>
             <form onSubmit={handleComment} style={{ display: "flex", gap: "15px", marginBottom: "40px" }}>

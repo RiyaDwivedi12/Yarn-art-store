@@ -33,17 +33,18 @@ function Cart() {
             </button>
           </div>
         ) : (
-          <div style={{ display: "flex", gap: "30px", flexDirection: "row", flexWrap: "wrap" }}>
+          <div className="responsive-flex-row" style={{ display: "flex", gap: "30px", flexDirection: "row", flexWrap: "wrap" }}>
 
             {/* LEFT SIDE - ITEMS */}
-            <div style={{ flex: "1 1 600px", display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div className="cart-items-container" style={{ flex: "1 1 100%", minWidth: "280px", display: "flex", flexDirection: "column", gap: "20px" }}>
               {cartItems.map((item) => {
                 const itemId = item._id || item.id;
                 const originalPrice = Math.floor(item.price * 1.4); // 40% mockup markup
                 return (
                   <div
                     key={itemId}
-                    style={{ display: "flex", gap: "20px", background: "#fff", padding: "20px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", alignItems: "flex-start", border: "1px solid #f0f0f0" }}
+                    className="cart-item-card"
+                    style={{ display: "flex", gap: "20px", background: "#fff", padding: "20px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", alignItems: "flex-start", border: "1px solid #f0f0f0", flexWrap: "wrap" }}
                   >
                     <img
                       src={item.image?.startsWith('http') ? item.image : `${BASE_URL}${item.image}`}
@@ -98,8 +99,8 @@ function Cart() {
             </div>
 
             {/* RIGHT SIDE - SUMMARY */}
-            <div style={{ flex: "1 1 350px" }}>
-              <div style={{ background: "#fff", padding: "30px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", position: "sticky", top: "100px", border: "1px solid #f0f0f0" }}>
+            <div className="cart-summary-container" style={{ flex: "1 1 300px", minWidth: "280px" }}>
+              <div style={{ background: "#fff", padding: "25px", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)", position: "sticky", top: "100px", border: "1px solid #f0f0f0" }}>
                 <h3 style={{ margin: "0 0 20px", borderBottom: "1px solid #eee", paddingBottom: "15px", color: "#333" }}>
                   Price Details
                 </h3>

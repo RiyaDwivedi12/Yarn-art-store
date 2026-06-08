@@ -57,10 +57,10 @@ function Profile() {
         <p style={{ margin: 0, fontSize: "16px", opacity: 0.9 }}>Manage your orders and account settings</p>
       </div>
 
-      <div style={{ maxWidth: "1200px", margin: "-30px auto 40px", padding: "0 20px", display: "flex", gap: "30px", flexWrap: "wrap", position: "relative", zIndex: 10 }}>
+      <div className="responsive-flex-row" style={{ maxWidth: "1200px", margin: "-30px auto 40px", padding: "0 20px", display: "flex", gap: "30px", flexWrap: "wrap", position: "relative", zIndex: 10 }}>
         
         {/* LEFT SIDEBAR NAVIGATION */}
-        <div style={{ flex: "1 1 220px", maxWidth: "260px" }}>
+        <div className="profile-sidebar" style={{ flex: "1 1 100%", minWidth: "250px" }}>
           <div style={{
             background: "#fff",
             borderRadius: "12px",
@@ -129,7 +129,7 @@ function Profile() {
         </div>
 
         {/* RIGHT CONTENT AREA */}
-        <div style={{ flex: "2 1 600px" }}>
+        <div className="profile-content" style={{ flex: "2 1 100%", minWidth: "280px" }}>
           
           {/* ORDERS TAB */}
           {activeTab === "orders" && (

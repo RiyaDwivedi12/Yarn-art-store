@@ -40,16 +40,16 @@ export default function Learn() {
            <img src="/src/assets/admin_dp.png" alt="Store Logo" style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }} onError={(e) => { e.target.src = "https://i.pravatar.cc/100?u=yarnart"; }} />
         </div>
         <div>
-          <h1 style={{ fontSize: "42px", margin: "0 0 10px", fontWeight: "800" }}>Learn Yarn Crafting</h1>
-          <p style={{ fontSize: "18px", maxWidth: "700px", margin: "0 auto", opacity: 0.95, lineHeight: "1.6" }}>
+          <h1 style={{ fontSize: "clamp(28px, 5vw, 42px)", margin: "0 0 10px", fontWeight: "800" }}>Learn Yarn Crafting</h1>
+          <p style={{ fontSize: "clamp(14px, 3vw, 18px)", maxWidth: "700px", margin: "0 auto", opacity: 0.95, lineHeight: "1.6" }}>
             Master the art of yarn with our professional course library. From absolute basic to advanced patterns, curated by experts.
           </p>
         </div>
       </div>
 
-      <div style={{ padding: "60px 40px", maxWidth: "1300px", margin: "0 auto" }}>
+      <div className="learn-page-container" style={{ padding: "60px 40px", maxWidth: "1300px", margin: "0 auto" }}>
         
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
+        <div className="learn-header-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px", flexWrap: "wrap", gap: "10px" }}>
           <h2 style={{ color: "#2d2d2d", fontSize: "32px", fontWeight: "700", margin: 0 }}>
             Available Courses
           </h2>

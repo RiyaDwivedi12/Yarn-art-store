@@ -101,14 +101,7 @@ function Wishlist() {
                     <img
                       src={item.image?.startsWith("http") ? item.image : `${BASE_URL}${item.image}`}
                       alt={item.name}
-                      style={{
-                        width: "100%",
-                        height: "220px",
-                        objectFit: "contain",
-                        borderRadius: "8px",
-                        backgroundColor: "#f9f9f9",
-                        padding: "10px"
-                      }}
+                      className="product-image"
                     />
                   </div>
 
@@ -116,17 +109,17 @@ function Wishlist() {
                     style={{ cursor: "pointer", flex: 1, display: "flex", flexDirection: "column" }}
                     onClick={() => navigate(`/product/${item._id || item.id}`)}
                   >
-                    <h4 style={{ margin: "15px 0 5px", fontSize: "16px", color: "#555", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <h4 className="product-title">
                       {item.name}
                     </h4>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", margin: "5px 0" }}>
-                      <span style={{ fontWeight: "bold", fontSize: "22px", color: "#333" }}>₹{item.price}</span>
-                      <span style={{ textDecoration: "line-through", color: "#999", fontSize: "14px" }}>₹{originalPrice}</span>
-                      <span style={{ color: "#038d63", fontWeight: "bold", fontSize: "14px" }}>28% off</span>
+                    <div className="product-price-row">
+                      <span className="product-price">₹{item.price}</span>
+                      <span className="product-original-price">₹{originalPrice}</span>
+                      <span className="product-discount">28% off</span>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", margin: "5px 0 10px" }}>
+                    <div className="product-rating-row">
                       <span style={{ background: "#23bb75", color: "white", padding: "3px 8px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold", display: "flex", alignItems: "center", gap: "4px" }}>
                         4.2 ⭐
                       </span>
@@ -134,11 +127,7 @@ function Wishlist() {
                     </div>
 
                     <div style={{ marginTop: "auto" }}>
-                      <span style={{ 
-                        background: "#f4f4f4", color: "#333", fontSize: "12px", 
-                        padding: "4px 8px", borderRadius: "15px", display: "inline-block",
-                        marginBottom: "15px", fontWeight: "bold"
-                      }}>
+                      <span className="product-delivery-badge">
                         🚚 Free Delivery
                       </span>
                     </div>

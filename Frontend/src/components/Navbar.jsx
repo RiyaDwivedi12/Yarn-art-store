@@ -208,28 +208,74 @@ export default function Navbar() {
         className={`mobile-nav-menu ${mobileMenuOpen ? 'open' : ''}`}
         ref={menuRef}
       >
-        <button className="mobile-nav-close" onClick={() => setMobileMenuOpen(false)}>✕</button>
-        <div style={{ clear: 'both', paddingTop: '20px' }}>
-          <h3 style={{ color: "#ff3f6c", margin: "0 0 20px 10px", fontSize: "22px" }}>YarnArt</h3>
+        {/* Profile / App Header */}
+        <div style={{ 
+          background: "linear-gradient(135deg, #f43397, #ff527b)", 
+          padding: "30px 20px 20px", 
+          paddingTop: "max(30px, env(safe-area-inset-top))",
+          color: "white",
+          position: "relative",
+          flexShrink: 0
+        }}>
+          <button 
+            className="mobile-nav-close" 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ position: "absolute", top: "max(15px, env(safe-area-inset-top))", right: "15px" }}
+          >
+            ✕
+          </button>
           
+          <div style={{ display: "flex", alignItems: "center", gap: "15px", marginTop: "10px" }}>
+            <div style={{ width: "55px", height: "55px", borderRadius: "50%", background: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", color: "#f43397" }}>
+              <FaUser />
+            </div>
+            <div>
+              <h3 style={{ margin: "0 0 5px 0", fontSize: "18px", fontWeight: "bold" }}>Welcome to YarnArt</h3>
+              <p style={{ margin: 0, fontSize: "13px", opacity: 0.9 }}>Discover premium crafts</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Navigation Links */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: "10px 0" }}>
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/")}>
-            🏠 Home
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>🏠</span> Home</div>
+            <span style={{ color: "#ccc" }}>›</span>
           </div>
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/learn")}>
-            🎓 Learn Crafting
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>🎓</span> Learn Crafting</div>
+            <span style={{ color: "#ccc" }}>›</span>
           </div>
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/supplies")}>
-            ✂️ DIY Supplies
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>✂️</span> DIY Supplies</div>
+            <span style={{ color: "#ccc" }}>›</span>
           </div>
+          
+          <div style={{ height: "1px", background: "#f5f5f5", margin: "15px 0" }}></div>
+          
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/wishlist")}>
-            ❤️ Wishlist ({wishlistItems?.length || 0})
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>❤️</span> Wishlist</div>
+            {wishlistItems?.length > 0 ? (
+              <span style={{ background: "#ff3f6c", color: "white", padding: "2px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>{wishlistItems.length}</span>
+            ) : <span style={{ color: "#ccc" }}>›</span>}
           </div>
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/cart")}>
-            🛒 Cart ({cartItems?.reduce((acc, item) => acc + item.quantity, 0) || 0})
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>🛒</span> Cart</div>
+            {cartItems?.length > 0 ? (
+              <span style={{ background: "#ff3f6c", color: "white", padding: "2px 10px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+              </span>
+            ) : <span style={{ color: "#ccc" }}>›</span>}
           </div>
           <div className="mobile-nav-item" onClick={() => handleMobileNav("/profile")}>
-            👤 My Profile
+            <div><span style={{ width: "35px", display: "inline-block", fontSize: "20px", verticalAlign: "middle" }}>👤</span> My Profile</div>
+            <span style={{ color: "#ccc" }}>›</span>
           </div>
+        </div>
+        
+        {/* Bottom App Footer */}
+        <div style={{ padding: "15px", textAlign: "center", borderTop: "1px solid #f0f0f0", fontSize: "12px", color: "#aaa", paddingBottom: "max(15px, env(safe-area-inset-bottom))" }}>
+          YarnArt Mobile App v1.0
         </div>
       </div>
     </>
