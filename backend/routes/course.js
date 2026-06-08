@@ -128,11 +128,11 @@ router.post("/like", async (req, res) => {
 
 // ✅ Add a Comment
 router.post("/comment", async (req, res) => {
-  const { userId, courseId, content } = req.body;
+  const { userId, courseId, content, parentId } = req.body;
   if (!content) return res.status(400).json({ error: "Comment content is required" });
 
   try {
-    const newComment = new Comment({ userId, courseId, content });
+    const newComment = new Comment({ userId, courseId, content, parentId: parentId || null });
     await newComment.save();
     
     // Return the new comment populated with user info
@@ -202,6 +202,8 @@ router.delete("/comment/:id", async (req, res) => {
     // Allow if admin OR if the user is the owner of the comment
     if (isAdmin || comment.userId.toString() === userId) {
       await Comment.findByIdAndDelete(req.params.id);
+      // Also delete nested replies
+      await Comment.deleteMany({ parentId: req.params.id });
       return res.json({ message: "Comment deleted successfully" });
     } else {
       return res.status(403).json({ error: "Unauthorized to delete this comment" });

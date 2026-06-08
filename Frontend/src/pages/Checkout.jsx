@@ -47,12 +47,7 @@ function Checkout() {
     if (cartItems.length === 0) return notify("Your cart is empty!", "error");
 
     setPlacingOrder(true);
-
-    if (formData.paymentMethod === "COD") {
-      await finalizeOrder("CASH_ON_DELIVERY");
-    } else {
-      await processRazorpay();
-    }
+    await finalizeOrder("CASH_ON_DELIVERY");
   };
 
   const finalizeOrder = async (paymentId) => {
@@ -87,82 +82,7 @@ function Checkout() {
     }
   };
 
-  const processRazorpay = async () => {
-    try {
-      const sdkLoaded = await new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.onload = () => resolve(true);
-        script.onerror = () => resolve(false);
-        document.body.appendChild(script);
-      });
 
-      if (!sdkLoaded) {
-        notify("Razorpay SDK failed to load. Are you online?", "error");
-        setPlacingOrder(false);
-        return;
-      }
-
-      const rzpOrder = await API.post("/payment/create-order", { amount: totalAmount })
-        .then(res => res.data)
-        .catch(() => null);
-
-      if (!rzpOrder || !rzpOrder.id) {
-        setTimeout(async () => {
-          notify("✨ Razorpay API Sandbox: Payment Processed Successfully!", "success");
-          await finalizeOrder("pay_mock_" + Math.random().toString(36).substring(7));
-        }, 1200);
-        return;
-      }
-
-      const options = {
-        key: "rzp_test_z11m4yG1v0L9Q8", 
-        amount: rzpOrder.amount,
-        currency: rzpOrder.currency,
-        name: "Yarn Art Store",
-        description: "A Premium E-Commerce Purchase",
-        order_id: rzpOrder.id,
-        handler: async function (response) {
-          try {
-            const verifyRes = await API.post("/payment/verify", {
-               razorpay_order_id: response.razorpay_order_id,
-               razorpay_payment_id: response.razorpay_payment_id,
-               razorpay_signature: response.razorpay_signature
-            }).then(res => res.data);
-
-            if (verifyRes.success) {
-               await finalizeOrder(response.razorpay_payment_id);
-            } else {
-               notify("Payment Signature Verification Failed!", "error");
-               setPlacingOrder(false);
-            }
-          } catch(e) {
-            console.error(e);
-            notify("Verification Server Error", "error");
-            setPlacingOrder(false);
-          }
-        },
-        prefill: {
-          name: formData.name,
-          email: JSON.parse(localStorage.getItem("user"))?.email || "customer@example.com",
-          contact: formData.phone
-        },
-        theme: { color: "#f43397" }
-      };
-
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.on('payment.failed', function (r) {
-        notify("Payment was not completed.", "error");
-        setPlacingOrder(false);
-      });
-      paymentObject.open();
-
-    } catch (err) {
-      notify("Network error reaching payment gateway.", "error");
-      console.error(err);
-      setPlacingOrder(false);
-    }
-  };
 
   return (
     <div style={{ background: "#f9f9f9", minHeight: "100vh", fontFamily: "'Inter', sans-serif" }}>
@@ -209,18 +129,11 @@ function Checkout() {
             <div style={{ borderTop: "1px solid #eee", paddingTop: "20px" }}>
               <h3 style={{ margin: "0 0 15px", fontSize: "18px", color: "#333" }}>Payment Method</h3>
               <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
-                <label style={{ flex: "1", minWidth: "200px", border: formData.paymentMethod === "COD" ? "2px solid #f43397" : "1px solid #ddd", background: formData.paymentMethod === "COD" ? "#FDE9F2" : "white", padding: "16px", borderRadius: "10px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px" }}>
-                  <input type="radio" name="paymentMethod" value="COD" checked={formData.paymentMethod === "COD"} onChange={handleInputChange} style={{ accentColor: "#f43397", width: "18px", height: "18px" }}/>
+                <label style={{ flex: "1", minWidth: "200px", border: "2px solid #f43397", background: "#FDE9F2", padding: "16px", borderRadius: "10px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px" }}>
+                  <input type="radio" name="paymentMethod" value="COD" checked={true} readOnly style={{ accentColor: "#f43397", width: "18px", height: "18px" }}/>
                   <span>
                     <strong style={{ display: "block", color: "#333", fontSize: "15px" }}>Cash on Delivery</strong>
                     <span style={{ color: "#777", fontSize: "12px" }}>Pay when your order arrives</span>
-                  </span>
-                </label>
-                <label style={{ flex: "1", minWidth: "200px", border: formData.paymentMethod === "ONLINE" ? "2px solid #f43397" : "1px solid #ddd", background: formData.paymentMethod === "ONLINE" ? "#FDE9F2" : "white", padding: "16px", borderRadius: "10px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px" }}>
-                  <input type="radio" name="paymentMethod" value="ONLINE" checked={formData.paymentMethod === "ONLINE"} onChange={handleInputChange} style={{ accentColor: "#f43397", width: "18px", height: "18px" }}/>
-                  <span>
-                    <strong style={{ display: "block", color: "#333", fontSize: "15px" }}>Online Payment (💳)</strong>
-                    <span style={{ color: "#777", fontSize: "12px" }}>UPI, Cards, Wallets via Razorpay</span>
                   </span>
                 </label>
               </div>
